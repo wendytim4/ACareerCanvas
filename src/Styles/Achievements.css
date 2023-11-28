@@ -1,0 +1,11 @@
+.moveUp {
+  margin-top: 35px;
+}
+
+.btn-row-achievements{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 310px;
+}
+
+

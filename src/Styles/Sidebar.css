@@ -1,0 +1,29 @@
+/* SideBar */
+.sidebar{
+    position: absolute;
+    background-color: #9F4848; 
+    color: white;
+    top: 55px;
+    left: 0;
+    height: 100%;
+    width: 220px;
+    padding-top: 40px;
+    font-weight: 600;
+ } 
+ .navigationBarList {
+    cursor: default;
+  }
+  .navigationBarList:hover {
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+    background-color: #923737;
+  }
+ .sidebar li{
+    list-style: none;
+    padding: 1rem 2rem;
+    display: flex;
+    gap: 1rem;
+    font-weight: 600;
+    border-bottom: black;
+    align-items: center; 
+ }

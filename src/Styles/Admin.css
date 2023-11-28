@@ -1,0 +1,30 @@
+.row-admin {
+    display: grid;
+    grid-template-columns: 20fr 10fr 1fr; 
+    margin-top: 10px;
+    margin-left: 0;
+}
+#second{
+    padding-bottom: 10px;
+    margin-top: 10px;
+}
+.btn-row-admin{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 140px;
+}
+.comments{
+    width: 300px;
+    height: 250px;
+}
+.row-admin > :nth-child(1) {
+    background-color: #e57373; 
+}
+
+.row-admin > :nth-child(2) {
+    background-color: #81c784; 
+}
+
+.row-admin > :nth-child(3) {
+    background-color: #64b5f6; 
+}

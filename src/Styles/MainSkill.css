@@ -1,0 +1,14 @@
+.row-skill {
+    display: grid;
+    grid-template-columns: 0.1fr 100fr 10fr; 
+    margin-top: 10px;
+}
+
+/* Button styles */
+.btn-row-skill{
+    display: flex;
+    justify-content: space-between;
+}
+#skills{
+    margin-top: 350px;
+}

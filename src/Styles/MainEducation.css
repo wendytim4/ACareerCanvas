@@ -1,0 +1,41 @@
+.btn-row-education{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 320px;
+}
+
+
+/* .row-education {
+  display: grid;
+  grid-template-columns: auto 5fr; 
+  display: flex;
+}
+
+.left-side {
+  flex: 0 0 auto; 
+}
+
+
+
+.approval-status{
+  flex: 3; 
+  margin-left: 90px;
+  margin-top: 10px;
+} */
+
+/* .main-education-btn{
+  height: 50px;
+  width: 100px;
+  margin-left: 500px;
+  margin-top: 0px;  
+}
+.main-btn{
+  margin-left: 15px;
+  margin-top: 240px;
+  padding: 10px 100px;
+  background-color: #9F4848; 
+  color: white; 
+  border: none; 
+  cursor: pointer;
+} */
+

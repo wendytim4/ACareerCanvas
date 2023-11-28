@@ -1,0 +1,21 @@
+.heading{
+    color: #9F4848;
+    text-align: center;
+    margin-left: 80%;
+}
+.skill-form{
+  margin-left: 20px;
+}
+
+.form-btn{
+  margin-left: 35px;
+  margin-top: 10px;
+  padding: 10px 100px;
+  color: white; 
+  border: none; 
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+
+

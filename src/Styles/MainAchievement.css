@@ -1,0 +1,9 @@
+.right-side-achievement{
+    flex: 3; 
+    margin-left: 20px;
+}
+.btn-row-achievement{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 360px;
+}
