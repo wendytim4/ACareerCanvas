@@ -14,34 +14,40 @@ const StudentProfile = () => {
     city: "",
     country: "",
     address: "",
+    student_id: "",
   });
 
   useEffect(() => {
-    // Fetch student data based on the authenticated user's ID
     const fetchStudentData = async () => {
       try {
         const studentId = sessionStorage.getItem("studentId");
-        const response = await fetch(
-          `http://localhost/careercanvas/student.php?student_id=${studentId}`
-        );
 
-        if (response.ok) {
-          const data = await response.json();
-          // Update state with student data
-          setFormData(data);
-          console.log(studentId);
+        if (studentId && !isNaN(studentId)) {
+          const response = await fetch(
+            `http://localhost/careercanvas/student.php?student_id=${studentId}`
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+            setFormData((prevData) => ({
+              ...prevData,
+              ...data,
+              student_id: parseInt(studentId),
+            }));
+          } else {
+            console.error("Error fetching student data");
+          }
         } else {
-          console.error("Error fetching student data");
+          console.error("Invalid or missing studentId in sessionStorage");
         }
       } catch (error) {
         console.error("Error:", error);
       }
     };
 
-    // Call the function to fetch data when the component mounts
     fetchStudentData();
-  }, []); // Empty dependency array ensures it only runs once
-
+  }, []);
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -53,6 +59,11 @@ const StudentProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitting form data:", formData);
+    if (!formData.student_id) {
+      console.error("Missing student_id in formData");
+      return;
+    }
+
     try {
       const response = await fetch(
         "http://localhost/careercanvas/student.php",
@@ -64,7 +75,6 @@ const StudentProfile = () => {
           body: JSON.stringify(formData),
         }
       );
-      console.log("API Response:", response);
       const data = await response.json();
 
       if (response.ok) {
@@ -77,6 +87,7 @@ const StudentProfile = () => {
       console.error("Error:", error);
     }
   };
+
 
   return (
     <div className="boarder-container">
@@ -210,6 +221,7 @@ const StudentProfile = () => {
         </div>
       </div>
 
+      <input type="hidden" name="student_id" value={formData.student_id} />
       <div className="btn-row">
         <button type="button" className="main-primary-btn">
           Cancel

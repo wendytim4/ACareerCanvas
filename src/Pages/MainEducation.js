@@ -1,71 +1,85 @@
-import React, { useState,useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../Styles/App.css";
 import "../Styles/Education.css";
-import axios from "axios";
 
 const Education = () => {
   const navigate = useNavigate();
-  const { student_id } = useParams();
-  const [studentId, setStudentId] = useState(null);
-  const [universityName, setUniversityName] = useState("");
-  const [programOfStudy, setProgramOfStudy] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [formData, setFormData] = useState({
+    universityName: "",
+    programOfStudy: "",
+    startDate: "",
+    endDate: "",
+    student_id: "",
+  });
 
   useEffect(() => {
-    const fetchStudentId = async () => {
+    const fetchStudentData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost/careercanvas/getStudentId.php?student_id=${student_id}`
-        );
+        const studentId = sessionStorage.getItem("studentId");
 
-        if (response.status === 200) {
-          setStudentId(response.data.studentId);
+        if (studentId && !isNaN(studentId)) {
+          const response = await fetch(
+            `http://localhost/careercanvas/student.php?student_id=${studentId}`
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+            setFormData((prevData) => ({
+              ...prevData,
+              ...data,
+              student_id: parseInt(studentId),
+            }));
+          } else {
+            console.error("Error fetching student data");
+          }
         } else {
-          console.error("Error fetching student ID");
+          console.error("Invalid or missing studentId in sessionStorage");
         }
       } catch (error) {
         console.error("Error:", error);
       }
     };
 
-    fetchStudentId();
-  }, [student_id]);
+    fetchStudentData();
+  }, []); // Update the dependency array
 
-  const handleSave = async () => {
-    console.log("Form Data:", {
-      universityName,
-      programOfStudy,
-      startDate,
-      endDate,
-      studentId,
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
     });
+  };
 
-    if (!universityName || !programOfStudy || !startDate || !endDate) {
-      console.error("All fields are required");
+  const handleSave = async (e) => {
+    e.preventDefault();
+    console.log("Submitting form data:", formData);
+    if (!formData.student_id) {
+      console.error("Missing student_id in formData");
       return;
     }
 
-    const data = {
-      universityName,
-      programOfStudy,
-      startDate,
-      endDate,
-      studentId
-    };
-
     try {
-      const response = await axios.post(
+      const response = await fetch(
         "http://localhost/careercanvas/education.php",
-        data
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
       );
+      const data = await response.json();
+      console.log("Response:", response);
 
-      if (response.status === 200) {
-        console.log("Data sent successfully");
-        
+      if (response.ok) {
+        console.log(data.message);
+        console.log("Data sent successfully", data);
       } else {
-        console.error("Error sending data");
+        console.error(data.error);
+        console.error("Error sending data. Status:", response.status);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -81,8 +95,9 @@ const Education = () => {
             type="text"
             className="form-control"
             id="universityName"
-            value={universityName}
-            onChange={(e) => setUniversityName(e.target.value)}
+            name="universityName"
+            value={formData.universityName}
+            onChange={handleChange}
           />
         </div>
 
@@ -91,8 +106,9 @@ const Education = () => {
           <select
             className="form-control"
             id="programOfStudy"
-            value={programOfStudy}
-            onChange={(e) => setProgramOfStudy(e.target.value)}
+            name="programOfStudy"
+            value={formData.programOfStudy}
+            onChange={handleChange}
           >
             <option value="" disabled>
               Select a program
@@ -124,8 +140,9 @@ const Education = () => {
             type="date"
             className="form-control"
             id="startDate"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
+            name="startDate"
+            value={formData.startDate}
+            onChange={handleChange}
           />
         </div>
 
@@ -135,12 +152,14 @@ const Education = () => {
             type="date"
             className="form-control"
             id="endDate"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
+            name="endDate"
+            value={formData.endDate}
+            onChange={handleChange}
           />
         </div>
       </div>
 
+      <input type="hidden" name="student_id" value={formData.student_id} />
       <div className="form-education-row">
         <div className="form-group col-md-6">
           <div className="moveble">
