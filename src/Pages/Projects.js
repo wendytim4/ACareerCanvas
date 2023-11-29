@@ -1,31 +1,67 @@
 import "../Styles/Projects.css";
 import { Link } from "react-router-dom";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
-const Projects = () => {
-  const [projectName, setprojectName] = useState("");
-  const [projectOwner, setprojectOwner] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [projectDescription, setprojectDescription] = useState("");
+const Projects = () =>
+{
+  const [formData, setFormData] = useState({
+    projectName: "",
+    projectOwner: "",
+    startDate: "",
+    endDate: "",
+    student_id: "",
+    projectDescription:"",
+  });
+  
+  useEffect(() => {
+    const fetchStudentData = async () => {
+      try {
+        const studentId = sessionStorage.getItem("studentId");
 
-  const handleSave = async () => {
-    console.log("Form Data:", {
-      projectName,
-      projectOwner,
-      startDate,
-      endDate,
-      projectDescription,
-    });
-    const data = {
-      projectName,
-      projectOwner,
-      startDate,
-      endDate,
-      projectDescription,
+        if (studentId && !isNaN(studentId)) {
+          const response = await fetch(
+            `http://localhost/careercanvas/student.php?student_id=${studentId}`
+          );
+
+          if (response.ok) {
+            const data = await response.json();
+            setFormData((prevData) => ({
+              ...prevData,
+              ...data,
+              student_id: parseInt(studentId),
+            }));
+          } else {
+            console.error("Error fetching student data");
+          }
+        } else {
+          console.error("Invalid or missing studentId in sessionStorage");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
     };
+
+    fetchStudentData();
+  }, []); // Update the dependency array
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    console.log("Submitting form data:", formData);
+    if (!formData.student_id) {
+      console.error("Missing student_id in formData");
+      return;
+    }
 
     try {
       const response = await fetch(
@@ -35,20 +71,23 @@ const Projects = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify(formData),
         }
       );
 
-      const responseData = await response.json();
+      const data = await response.json();
+      console.log("Response:", response);
 
       if (response.ok) {
-        console.log(responseData.message);
-        // Redirect or perform additional actions upon successful save
+        console.log(data.message);
+        console.log("Data sent successfully", data);
       } else {
-        console.error(responseData.error);
+        console.error(data.error);
+        console.error("Error sending data. Status:", response.status);
       }
     } catch (error) {
       console.error("Error:", error);
+    
     }
   };
 
@@ -62,8 +101,8 @@ const Projects = () => {
             className="form-control"
             id="inputEmail4"
             name="projectName"
-            value={projectName}
-            onChange={(e) => setprojectName(e.target.value)}
+            value={formData.projectName}
+            onChange={handleChange}
           />
         </div>
 
@@ -74,8 +113,8 @@ const Projects = () => {
             className="form-control"
             id="inputEmail4"
             name="projectOwner"
-            value={projectOwner}
-            onChange={(e) => setprojectOwner(e.target.value)}
+            value={formData.projectOwner}
+            onChange={handleChange}
           />
         </div>
       </div>
@@ -88,8 +127,8 @@ const Projects = () => {
             className="form-control"
             id="inputEmail4"
             name="startDate"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
+            value={formData.startDate}
+            onChange={handleChange}
           />
         </div>
 
@@ -100,8 +139,8 @@ const Projects = () => {
             className="form-control"
             id="inputEmail4"
             name="endDate"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
+            value={formData.endDate}
+            onChange={handleChange}
           />
         </div>
       </div>
@@ -116,7 +155,7 @@ const Projects = () => {
               id="description"
               name="projectDescription"
               style={{ width: "990px", height: "100px" }}
-              onChange={(e) => setprojectDescription(e.target.value)}
+              onChange={handleChange}
             />
           </div>
         </div>

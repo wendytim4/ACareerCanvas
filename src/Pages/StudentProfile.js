@@ -47,7 +47,7 @@ const StudentProfile = () => {
 
     fetchStudentData();
   }, []);
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -80,6 +80,7 @@ const StudentProfile = () => {
       if (response.ok) {
         console.log(data.message);
         console.log("Data sent successfully");
+        navigate("/education");
       } else {
         console.error(data.error);
       }
