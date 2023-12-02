@@ -15,7 +15,6 @@ const MainSkill = () => {
         const fetchData = async () => {
         try {
             const studentId = sessionStorage.getItem("studentId");
-
             const response = await fetch(
             `http://localhost/api/getskill.php?student_id=${studentId}`
             );
