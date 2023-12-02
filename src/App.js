@@ -45,9 +45,10 @@ function App() {
             <Route path="/education" element={<EducationForm />} />
             <Route path="/achievements" element={<Achievements />} />
             <Route path="/projects" element={<Projects />} />
-            <Route path="/activities" element={<CoCurriculum />} />
+            <Route path="/activity" element={<CoCurriculum />} />
             <Route path="/workexperience" element={<WorkExperience />} />
             <Route path="/studentprofile" element={<StudentProfile />} />
+            
 
             {/* Main Student Pages */}
             <Route path="/maineducation" element={<MainEducation />} />

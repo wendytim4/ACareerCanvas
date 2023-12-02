@@ -19,7 +19,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost/careercanvas/login.php",
+        "http://localhost/api/login.php",
         data
       );
 

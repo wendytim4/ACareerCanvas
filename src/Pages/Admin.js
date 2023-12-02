@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import '../Styles/Admin.css';
 import '../Styles/App.css';
 
-
-
 const Admin = () => {
   return (
       <div className='boarder-container'>

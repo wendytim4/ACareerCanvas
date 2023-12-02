@@ -18,7 +18,7 @@ const MainProject = () => {
         const studentId = sessionStorage.getItem("studentId");
 
         const response = await fetch(
-          `http://localhost/careercanvas/getProjectData.php?student_id=${studentId}`
+          `http://localhost/api/getProjectData.php?student_id=${studentId}`
         );
         const data = await response.json();
         console.log("API Response:", data);

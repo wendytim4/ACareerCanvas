@@ -7,12 +7,12 @@ import "react-datepicker/dist/react-datepicker.css";
 const Projects = () =>
 {
   const [formData, setFormData] = useState({
-    projectName: "",
-    projectOwner: "",
-    startDate: "",
-    endDate: "",
+    project_name: "",
+    project_owner: "",
+    start_date: "",
+    end_date: "",
     student_id: "",
-    projectDescription:"",
+    project_description:"",
   });
   
   useEffect(() => {
@@ -22,7 +22,7 @@ const Projects = () =>
 
         if (studentId && !isNaN(studentId)) {
           const response = await fetch(
-            `http://localhost/careercanvas/student.php?student_id=${studentId}`
+            `http://localhost/api/student.php?student_id=${studentId}`
           );
 
           if (response.ok) {
@@ -65,7 +65,7 @@ const Projects = () =>
 
     try {
       const response = await fetch(
-        "http://localhost/careercanvas/project.php",
+        "http://localhost/api/project.php",
         {
           method: "POST",
           headers: {
@@ -95,25 +95,25 @@ const Projects = () =>
     <div className="boarder-container">
       <div className="form-project-row">
         <div className="form-group col-md-6">
-          <label htmlFor="inputEmail4">Project Name</label>
+          <label htmlFor="project_name">Project Name</label>
           <input
             type="text"
             className="form-control"
-            id="inputEmail4"
-            name="projectName"
-            value={formData.projectName}
+            id="project_name"
+            name="project_name"
+            value={formData.project_name}
             onChange={handleChange}
           />
         </div>
 
         <div className="form-group col-md-6">
-          <label htmlFor="inputEmail">Project Owner</label>
+          <label htmlFor="project_owner">Project Owner</label>
           <input
             type="text"
             className="form-control"
-            id="inputEmail4"
-            name="projectOwner"
-            value={formData.projectOwner}
+            id="project_owner"
+            name="project_owner"
+            value={formData.project_owner	}
             onChange={handleChange}
           />
         </div>
@@ -121,25 +121,25 @@ const Projects = () =>
 
       <div className="form-project-row">
         <div className="form-group col-md-6">
-          <label htmlFor="inputEmail4">Start Date</label>
+          <label htmlFor="start_date">Start Date</label>
           <input
             type="date"
             className="form-control"
-            id="inputEmail4"
-            name="startDate"
-            value={formData.startDate}
+            id="start_date"
+            name="start_date"
+            value={formData.start_date}
             onChange={handleChange}
           />
         </div>
 
         <div className="form-group col-md-6">
-          <label htmlFor="inputEmail">End Date</label>
+          <label htmlFor="end_date">End Date</label>
           <input
             type="date"
             className="form-control"
-            id="inputEmail4"
-            name="endDate"
-            value={formData.endDate}
+            id="end_date"
+            name="end_date"
+            value={formData.end_date}
             onChange={handleChange}
           />
         </div>
@@ -148,13 +148,14 @@ const Projects = () =>
       <div className="form-project-row">
         <div className="form-project-row">
           <div className="form-group col-md-6">
-            <label htmlFor="inputEmail4">Project Description</label>
+            <label htmlFor="project_description">Project Description</label>
             <input
               type="text"
               className="form-control"
-              id="description"
-              name="projectDescription"
-              style={{ width: "990px", height: "100px" }}
+              id="project_description"
+              name="project_description"
+              style={{ width: "800px", height: "100px" }}
+              value={formData.project_description}
               onChange={handleChange}
             />
           </div>
@@ -164,7 +165,7 @@ const Projects = () =>
           <div className="form-group col-md-6">
             <div className="moveDown">
               <h6>
-                <Link to="/save"> Add New Project</Link>
+                <Link to="/MainProject"> Add New Project</Link>
               </h6>
             </div>
           </div>
@@ -174,6 +175,7 @@ const Projects = () =>
           <button type="submit" className="main-primary-btn">
             cancel
           </button>
+
           <button
             type="button"
             className="main-primary-btn"
@@ -181,6 +183,7 @@ const Projects = () =>
           >
             save
           </button>
+          
         </div>
       </div>
     </div>

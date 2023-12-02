@@ -21,10 +21,11 @@ const StudentProfile = () => {
     const fetchStudentData = async () => {
       try {
         const studentId = sessionStorage.getItem("studentId");
+        console.log(studentId)
 
         if (studentId && !isNaN(studentId)) {
           const response = await fetch(
-            `http://localhost/careercanvas/student.php?student_id=${studentId}`
+            `http://localhost/api/student.php?student_id=${studentId}`
           );
 
           if (response.ok) {
@@ -59,6 +60,7 @@ const StudentProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitting form data:", formData);
+    console.log(formData.student_id);
     if (!formData.student_id) {
       console.error("Missing student_id in formData");
       return;
@@ -66,7 +68,7 @@ const StudentProfile = () => {
 
     try {
       const response = await fetch(
-        "http://localhost/careercanvas/student.php",
+        "http://localhost/api/student.php",
         {
           method: "POST",
           headers: {

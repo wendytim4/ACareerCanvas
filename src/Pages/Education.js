@@ -11,6 +11,7 @@ const Education = () => {
     startDate: "",
     endDate: "",
     student_id: "",
+
   });
 
   useEffect(() => {
@@ -20,7 +21,8 @@ const Education = () => {
 
         if (studentId && !isNaN(studentId)) {
           const response = await fetch(
-            `http://localhost/careercanvas/student.php?student_id=${studentId}`
+            `http://localhost/api/student.php?student_id=${studentId}`
+            
           );
 
           if (response.ok) {
@@ -62,7 +64,7 @@ const Education = () => {
 
     try {
       const response = await fetch(
-        "http://localhost/careercanvas/education.php",
+        "http://localhost/api/education.php",
         {
           method: "POST",
           headers: {
@@ -159,7 +161,7 @@ const Education = () => {
         </div>
       </div>
 
-      <input type="hidden" name="student_id" value={formData.student_id} />
+      <input type="hidden" name="student_id" value={formData.student_id} onChange={handleChange}/>
       <div className="form-education-row">
         <div className="form-group col-md-6">
           <div className="moveble">

@@ -25,7 +25,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost/careercanvas/register.php",
+        "http://localhost/api/register.php",
         data
       );
 
