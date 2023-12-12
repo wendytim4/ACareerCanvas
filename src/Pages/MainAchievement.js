@@ -46,14 +46,22 @@ const MainAchievement = () => {
     const handleCheckboxChange = (achievement_id) => {
       setSelectedItems((prevSelectedItems) => {
         const isAlreadySelected = prevSelectedItems.includes(achievement_id);
-  
+    
         if (isAlreadySelected) {
+          // If already selected, uncheck the item by filtering it out
           return prevSelectedItems.filter((id) => id !== achievement_id);
         } else {
+          // If not selected, check the item by adding it to the array
           return [...prevSelectedItems, achievement_id];
         }
       });
     };
+
+    const selectedSkills = achievementData.filter((achievementItem) =>
+    selectedItems.includes(achievementItem.achievement_id)
+      );
+
+      console.log("Submitting data:", selectedSkills);
   
     const handleCheckAll = () => {
       const allExperienceIds = achievementData.map((item) => item.achievement_id);
@@ -66,13 +74,7 @@ const MainAchievement = () => {
   
     const handleCheckSubmit = async (e) => {
       e.preventDefault();
-      console.log("Submitting form data:", achievementData);
-      console.log(achievementData.student_id);
-      console.log(achievementData.end_date);
-      if (!achievementData.student_id) {
-        console.error("Missing student_id in achievementData");
-        return;
-      }
+      console.log("Submitting form data:", selectedSkills);
   
       try {
         const response = await fetch(
@@ -82,7 +84,7 @@ const MainAchievement = () => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(achievementData),
+            body: JSON.stringify(selectedSkills),
           }
         );
         const data = await response.json();

@@ -41,17 +41,25 @@ const MainExperience = () => {
     return <p>Loading...</p>; // You can replace this with a loading spinner or any other loading indicator
   }
 
-  const handleCheckboxChange = (experienceId) => {
+  const handleCheckboxChange = (experience_id) => {
     setSelectedItems((prevSelectedItems) => {
-      const isAlreadySelected = prevSelectedItems.includes(experienceId);
-
+      const isAlreadySelected = prevSelectedItems.includes(experience_id);
+  
       if (isAlreadySelected) {
-        return prevSelectedItems.filter((id) => id !== experienceId);
+        // If already selected, uncheck the item by filtering it out
+        return prevSelectedItems.filter((id) => id !== experience_id);
       } else {
-        return [...prevSelectedItems, experienceId];
+        // If not selected, check the item by adding it to the array
+        return [...prevSelectedItems, experience_id];
       }
     });
   };
+
+  const selectedSkills = experienceData.filter((experienceItem) =>
+  selectedItems.includes(experienceItem.experience_id)
+    );
+
+    console.log("Submitting data:", selectedSkills);
 
   const handleCheckAll = () => {
     const allExperienceIds = experienceData.map((item) => item.experience_id);
@@ -64,13 +72,8 @@ const MainExperience = () => {
 
   const handleCheckSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting form data:", experienceData);
-    console.log(experienceData[0].student_id);
-    console.log(experienceData[0].end_date);
-    if (!experienceData[0].student_id) {
-      console.error("Missing student_id in experienceData");
-      return;
-    }
+    console.log("Submitting form data:", selectedSkills);
+       
 
     try {
       const response = await fetch(
@@ -80,7 +83,7 @@ const MainExperience = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(experienceData[0]),
+          body: JSON.stringify(selectedSkills),
         }
       );
       const data = await response.json();
@@ -135,9 +138,6 @@ const MainExperience = () => {
 //       </div>
 //     );
 //   }
-
-        
-
 
   return (
     <div className='boarder-container'>

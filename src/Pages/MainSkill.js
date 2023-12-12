@@ -43,16 +43,25 @@ const MainSkill = () => {
     }
 
     const handleCheckboxChange = (skill_id) => {
-        setSelectedItems((prevSelectedItems) => {
-          const isAlreadySelected = prevSelectedItems.includes(skill_id);
+      setSelectedItems((prevSelectedItems) => {
+        const isAlreadySelected = prevSelectedItems.includes(skill_id);
     
-          if (isAlreadySelected) {
-            return prevSelectedItems.filter((id) => id !== skill_id);
-          } else {
-            return [...prevSelectedItems, skill_id];
-          }
-        });
-      };
+        if (isAlreadySelected) {
+          // If already selected, uncheck the item by filtering it out
+          return prevSelectedItems.filter((id) => id !== skill_id);
+        } else {
+          // If not selected, check the item by adding it to the array
+          return [...prevSelectedItems, skill_id];
+        }
+      });
+    };
+
+    const selectedSkills = skillData.filter((skillItem) =>
+    selectedItems.includes(skillItem.skill_id)
+      );
+
+      console.log("Submitting data:", selectedSkills);
+    
     
       const handleCheckAll = () => {
         const allExperienceIds = skillData.map((item) => item.skill_id);
@@ -62,16 +71,13 @@ const MainSkill = () => {
       const handleUncheckAll = () => {
         setSelectedItems([]);
       };
+
     
-      const handleCheckSubmit = async (e) => {
+    const handleCheckSubmit = async (e) => {
         e.preventDefault();
-        console.log("Submitting form data:", skillData);
-        console.log(skillData[0].student_id);
-        console.log(skillData[0].end_date);
-        if (!skillData[0].student_id) {
-          console.error("Missing student_id in experienceData");
-          return;
-        }
+        console.log("Submitting form data:", selectedSkills);
+       
+        
     
         try {
           const response = await fetch(
@@ -81,7 +87,7 @@ const MainSkill = () => {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify(skillData[0]),
+              body: JSON.stringify(selectedSkills),
             }
           );
           const data = await response.json();
@@ -111,7 +117,9 @@ return (
       </div>
 
     {skillData.map((skillItem) => (
+
         <div key={skillItem.skill_id} className='row-grid'>
+          
           <div className='left-side-experience'>
             <CheckBoxIcon
               color={selectedItems.includes(skillItem.skill_id) ? "primary" : "disabled"}

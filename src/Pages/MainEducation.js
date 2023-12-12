@@ -20,7 +20,7 @@ const MainEducation = () =>
         const studentId = sessionStorage.getItem("studentId");
 
         const response = await fetch(
-          `http://localhost/careercanvas/getEducationData.php?student_id=${studentId}`
+          `http://localhost/api/getEducationData.php?student_id=${studentId}`
         );
         const data = await response.json();
         console.log("API Response:", data);

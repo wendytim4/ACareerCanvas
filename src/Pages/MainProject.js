@@ -46,15 +46,20 @@ const MainProject = () => {
   const handleCheckboxChange = (project_id) => {
     setSelectedItems((prevSelectedItems) => {
       const isAlreadySelected = prevSelectedItems.includes(project_id);
-
+  
       if (isAlreadySelected) {
+        // If already selected, uncheck the item by filtering it out
         return prevSelectedItems.filter((id) => id !== project_id);
       } else {
+        // If not selected, check the item by adding it to the array
         return [...prevSelectedItems, project_id];
       }
     });
   };
 
+  const selectedSkills = projectData.filter((projectItem) =>
+  selectedItems.includes(projectItem.project_id)
+    );
   const handleCheckAll = () => {
     const allExperienceIds = projectData.map((item) => item.project_id);
     setSelectedItems(allExperienceIds);
@@ -66,13 +71,7 @@ const MainProject = () => {
 
   const handleCheckSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting form data:", projectData);
-    console.log(projectData[0].student_id);
-    console.log(projectData[0].end_date);
-    if (!projectData[0].student_id) {
-      console.error("Missing student_id in projectData");
-      return;
-    }
+    console.log("Submitting form data:", selectedSkills);
 
     try {
       const response = await fetch(
@@ -82,7 +81,7 @@ const MainProject = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(projectData[0]),
+          body: JSON.stringify(selectedSkills),
         }
       );
       const data = await response.json();
@@ -213,16 +212,4 @@ const MainProject = () => {
     </div>
   );
 };
-
-
 export default MainProject;
-
-
-
-
-
-
-
-
-
- 

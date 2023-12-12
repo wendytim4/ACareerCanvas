@@ -45,14 +45,22 @@ const MainCurriculum = () => {
   const handleCheckboxChange = (curriculum_id) => {
     setSelectedItems((prevSelectedItems) => {
       const isAlreadySelected = prevSelectedItems.includes(curriculum_id);
-
+  
       if (isAlreadySelected) {
+        // If already selected, uncheck the item by filtering it out
         return prevSelectedItems.filter((id) => id !== curriculum_id);
       } else {
+        // If not selected, check the item by adding it to the array
         return [...prevSelectedItems, curriculum_id];
       }
     });
   };
+
+  const selectedSkills = curriculumData.filter((curriculumItem) =>
+  selectedItems.includes(curriculumItem.curriculum_id)
+    );
+
+    console.log("Submitting data:", selectedSkills);
 
   const handleCheckAll = () => {
     const allExperienceIds = curriculumData.map((item) => item.curriculum_id);
@@ -65,13 +73,7 @@ const MainCurriculum = () => {
 
   const handleCheckSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting form data:", curriculumData);
-    console.log(curriculumData[0].student_id);
-    console.log(curriculumData[0].end_date);
-    if (!curriculumData[0].student_id) {
-      console.error("Missing student_id in curriculumData");
-      return;
-    }
+    console.log("Submitting form data:", selectedSkills);
 
     try {
       const response = await fetch(
@@ -81,7 +83,7 @@ const MainCurriculum = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(curriculumData[0]),
+          body: JSON.stringify(selectedSkills),
         }
       );
       const data = await response.json();
@@ -136,14 +138,6 @@ const MainCurriculum = () => {
 //       </div>
 //     );
 //   }
-
-
-
-
-
-
-
-
 
 
   return (
