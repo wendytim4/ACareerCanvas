@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $json_data = file_get_contents("php://input");
     $data = json_decode($json_data);
 
-    $student_id = intval($data->student_id);
+    $student_id = intval($data->student_id); 
 
     // Validate and sanitize the data (you might need to improve this based on your requirements)
     $achievement_name = mysqli_real_escape_string($conn, $data->achievement_name);
@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $year_attained = mysqli_real_escape_string($conn, $data->year_attained);
     
     // Insert data into the 'education' table using prepared statements
-    $sql = "INSERT INTO achievement(achievement_name, organization_name, year_attained,student_id)
+    $sql = "INSERT INTO achievement_cv(achievement_name, organization_name, year_attained,student_id)
             VALUES (?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);

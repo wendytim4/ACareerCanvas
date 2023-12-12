@@ -15,22 +15,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Validate and sanitize the data (you might need to improve this based on your requirements)
     $student_id = intval($data->student_id); 
 
-    $githubUsername = mysqli_real_escape_string($conn, $data->githubUsername);
-    $linkedInProfile = mysqli_real_escape_string($conn, $data->linkedInProfile);
+    $github = mysqli_real_escape_string($conn, $data->github);
+    $linkedin = mysqli_real_escape_string($conn, $data->linkedin);
     $phoneNumber = mysqli_real_escape_string($conn, $data->phoneNumber);
     $city = mysqli_real_escape_string($conn, $data->city);
     $country = mysqli_real_escape_string($conn, $data->country);
     $address = mysqli_real_escape_string($conn, $data->address);
+    $email = mysqli_real_escape_string($conn, $data->email);
+    $full_name = mysqli_real_escape_string($conn, $data->full_name);
 
     // Update the student record in the database based on the student ID
     // Insert data into the 'education' table using prepared statements
-    $sql = "INSERT INTO studentprofile (github, linkedin, phonenumber, city, country, addresss, student_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO studentprofile (github, linkedin, phonenumber, city, country, addresss, email,full_name,student_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
 
     if ($stmt) {
-        $stmt->bind_param('ssssssi', $githubUsername, $linkedInProfile, $phoneNumber, $city, $country, $address, $student_id);
+        $stmt->bind_param('ssssssssi', $github, $linkedin, $phoneNumber, $city, $country, $address, $email,$full_name,$student_id );
 
         if ($stmt->execute()) {
             echo json_encode(array("message" => "Record inserted successfully"));

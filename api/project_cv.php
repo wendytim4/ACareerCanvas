@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
  
 
     // Insert data into the 'project' table using prepared statements
-    $sql = "INSERT INTO project (project_name, project_owner, start_date, end_date,project_description, project_descriptionone, project_descriptiontwo,student_id)
+    $sql = "INSERT INTO project_cv (project_name, project_owner, start_date, end_date,project_description, project_descriptionone, project_descriptiontwo,student_id)
             VALUES (?, ?, ?, ?, ?, ?,?,?)";
 
     $stmt = $conn->prepare($sql);

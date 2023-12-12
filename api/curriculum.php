@@ -20,15 +20,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $start_date = mysqli_real_escape_string($conn, $data->start_date);
     $end_date = mysqli_real_escape_string($conn, $data->end_date);
     $description = mysqli_real_escape_string($conn, $data->description);
+    $descriptionone = mysqli_real_escape_string($conn, $data->descriptionone);
+    $descriptiontwo = mysqli_real_escape_string($conn, $data->descriptiontwo);
     
 
 
     // Insert data into the 'education' table using prepared statements
-    $sql = "INSERT INTO co_curriculum(activity_name, organization_name, start_date, end_date,description,student_id)
-            VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO co_curriculum(activity_name, organization_name, start_date, end_date,description,descriptionone,descriptiontwo,student_id)
+            VALUES (?, ?, ?, ?, ?, ?,?,?)";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssi", $activity_name, $organization_name, $start_date , $end_date, $description, $student_id);
+    $stmt->bind_param("sssssssi", $activity_name, $organization_name, $start_date , $end_date, $description,$descriptionone,$descriptiontwo, $student_id);
 
     if ($stmt->execute()) {
         echo json_encode(array("message" => "Record inserted successfully"));

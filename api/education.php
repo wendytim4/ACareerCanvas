@@ -19,17 +19,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $programOfStudy = mysqli_real_escape_string($conn, $data->programOfStudy);
     $startDate = mysqli_real_escape_string($conn, $data->startDate);
     $endDate = mysqli_real_escape_string($conn, $data->endDate);
+    $location = mysqli_real_escape_string($conn, $data->location);
     
     if ($programOfStudy === "Other") {
             $programOfStudy = mysqli_real_escape_string($conn, $data->otherProgramOfStudy);
         }
 
     // Insert data into the 'education' table using prepared statements
-    $sql = "INSERT INTO education (university_name, program_of_study, start_date, end_date,student_id)
-            VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO education (university_name, program_of_study, start_date, end_date,location,student_id)
+            VALUES (?, ?, ?, ?, ?,?)";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssi", $universityName, $programOfStudy, $startDate, $endDate,$student_id);
+    $stmt->bind_param("sssssi", $universityName, $programOfStudy, $startDate, $endDate,$location,$student_id);
 
     if ($stmt->execute()) {
         echo json_encode(array("message" => "Record inserted successfully"));

@@ -5,25 +5,33 @@ header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Max-Age: 86400"); // 24 hours cache
 
 include 'db.php'; 
+
 // Check if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Collect JSON data from the request body
     $json_data = file_get_contents("php://input");
     $data = json_decode($json_data);
 
-    $student_id = intval($data->student_id);
+    $student_id = intval($data->student_id); 
 
     // Validate and sanitize the data (you might need to improve this based on your requirements)
-    $achievement_name = mysqli_real_escape_string($conn, $data->achievement_name);
+    $job_title = mysqli_real_escape_string($conn, $data->job_title);
     $organization_name = mysqli_real_escape_string($conn, $data->organization_name);
-    $year_attained = mysqli_real_escape_string($conn, $data->year_attained);
+    $start_date = mysqli_real_escape_string($conn, $data->start_date);
+    $end_date = mysqli_real_escape_string($conn, $data->end_date);
+    $country = mysqli_real_escape_string($conn, $data->country);
+    $city = mysqli_real_escape_string($conn, $data->city);
+    $job_description= mysqli_real_escape_string($conn, $data->job_description);
+    $job_descriptionone= mysqli_real_escape_string($conn, $data->job_descriptionone);
+    $job_descriptiontwo= mysqli_real_escape_string($conn, $data->job_descriptiontwo);
+
     
     // Insert data into the 'education' table using prepared statements
-    $sql = "INSERT INTO achievement(achievement_name, organization_name, year_attained,student_id)
-            VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO cv_work_experience(job_title,country,city, organization_name, start_date, end_date,job_description,job_descriptionone,job_descriptiontwo,student_id)
+            VALUES (?, ?, ?, ?,?,?, ?,?,?,?)";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssi",$achievement_name, $organization_name, $year_attained,$student_id);
+    $stmt->bind_param("sssssssssi", $job_title,$country,$city ,$organization_name, $start_date, $end_date, $job_description,$job_descriptionone,$job_descriptiontwo,$student_id);
 
     if ($stmt->execute()) {
         echo json_encode(array("message" => "Record inserted successfully"));
