@@ -1,0 +1,112 @@
+.container-resume {
+    width: 8.27in; 
+    max-height: 11.69in; 
+    margin: 0 auto;
+    box-sizing: border-box;
+    overflow-y: auto; 
+    background-color: aqua;
+  }
+  
+  .container-resume header {
+    margin-top: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .container-resume section {
+    margin-bottom: 30px;
+  }
+  
+  .container-resume h2 {
+    border-bottom: 2px solid #333; /* Add a border below section headings */
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .container-resume ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .container-resume li {
+    margin-bottom: 10px;
+  }
+
+  .container-resume View {
+    margin-bottom: 10px;
+  }
+  
+  
+
+  .header{
+    font-weight: 100;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+  }
+
+  header {
+    text-align: center;
+  }
+  
+  header h5 {
+    font-family: Verdana, sans-serif;
+    font-size: 14px;
+    margin-bottom: 5px; 
+  }
+  
+  .header {
+    font-family: Verdana, sans-serif;
+    font-size: 8.5px;
+    margin: 2px 0; 
+  }
+
+  .inner_container{
+    margin: '0 auto'; 
+    margin-left: 20px;
+    margin-right: 20px;
+    width: '80%';
+    background-color: rgb(137, 137, 185);
+    font-family: Verdana, sans-serif;
+    font-size: 8.5px;
+  }
+
+  .school {
+    display: inline-block;
+    width: 83%; 
+  }
+  
+  .degree {
+    display: inline-block;
+    width: 92%; 
+  }
+  .experience{
+    display: inline-block;
+    width: 90%;
+
+  }
+
+  .awards{
+    display: inline-block;
+    width: 95%;
+
+
+  }
+  
+.nameTag{
+    font-family: Verdana, sans-serif;
+    font-size: 8.5px;
+  }
+
+.long{
+    width: '100%';
+    margin: '0 auto';
+    border: '1px solid black';
+    color: black;
+    border-color: black; /* Set the color of the line */
+}
+
+.inner_container {
+    max-height: 450px; /* Adjust the max height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px; /* Add padding for better aesthetics */
+  }

@@ -15,6 +15,10 @@ const WorkExperience=()=>{
     start_date:"",
     job_description: "",
     student_id: "",
+    job_descriptionone: "",
+    job_descriptiontwo: "",
+    city: "",
+    country: "",
   });
 
   useEffect(() => {
@@ -118,13 +122,39 @@ return (
                      />
                     
                   </div>
+
+                  <div className="form-group col-md-6">
+                    <label htmlFor="city">City </label>
+                    <input
+                    type="text" 
+                    className="form-control"
+                    id="city"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleChange}
+                     />
+                    
+                  </div>
+
+                  <div className="form-group col-md-6">
+                    <label htmlFor="country">Country </label>
+                    <input
+                    type="text" 
+                    className="form-control"
+                    id="country"
+                    name="country"
+                    value={formData.country}
+                    onChange={handleChange}
+                     />
+                    
+                  </div>
               </div>
 
               <div className="form-project-row">
                   <div className="form-group col-md-6">
-                    <label htmlFor="start_date">Start Date</label>
+                    <label htmlFor="start_date">Start Date(Month and Year)</label>
                     <input
-                    type="date" 
+                    type="text" 
                     className="form-control"
                     id="start_date"
                     name="start_date"
@@ -134,9 +164,9 @@ return (
                   </div>
 
                   <div className="form-group col-md-6">
-                    <label htmlFor="end_date">End Date</label>
+                    <label htmlFor="end_date">End Date(Month and Year)</label>
                     <input
-                    type="date" 
+                    type="text" 
                     className="form-control"
                     id="end_date"
                     name="end_date"
@@ -149,7 +179,7 @@ return (
             <div className="form-project-row">
               <div className="form-project-row">
                   <div className="form-group col-md-6">
-                    <label htmlFor="job_description">Job Description</label>
+                    <label htmlFor="job_description">Job Description One</label>
                     <input
                      type="text" 
                      className="form-control" 
@@ -157,7 +187,31 @@ return (
                      name="job_description"
                      value={formData.job_description}
                     onChange={handleChange}
-                     style={{width: '900px', height: '100px'}}/>
+                    />
+                  </div>
+
+                  <div className="form-group col-md-6">
+                    <label htmlFor="job_descriptionone">Job Description Two</label>
+                    <input
+                     type="text" 
+                     className="form-control" 
+                     id="description" 
+                     name="job_descriptionone"
+                     value={formData.job_descriptionone}
+                    onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="form-group col-md-6">
+                    <label htmlFor="job_descriptiontwo">Job Description Three</label>
+                    <input
+                     type="text" 
+                     className="form-control" 
+                     id="description" 
+                     name="job_descriptiontwo"
+                     value={formData.job_descriptiontwo}
+                    onChange={handleChange}
+                    />
                   </div>
               </div>
               </div>

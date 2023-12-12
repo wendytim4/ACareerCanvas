@@ -7,7 +7,6 @@ import "../Styles/MainEducation.css";
 const MainEducation = () =>
 {
   const navigate = useNavigate();
-
   const [educationData, setEducationData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingIndex, setEditingIndex] = useState(null);
@@ -44,7 +43,6 @@ const MainEducation = () =>
   if (loading) {
     return <p>Loading...</p>; // You can replace this with a loading spinner or any other loading indicator
   }
-
   const handleEditChange = (e, index, fieldName) => {
     const { value } = e.target;
     setEducationData((prevData) => {
@@ -139,6 +137,21 @@ const MainEducation = () =>
                   />
                 ) : (
                   educationItem.program_of_study
+                )}
+              </span>
+            </div>
+
+            <div className="labels-container">
+              <label htmlFor="label1">Location :</label>
+              <span id="label1">
+                {editingIndex === index ? (
+                  <input
+                    type="text"
+                    value={educationItem.location}
+                    onChange={(e) => handleEditChange(e, index)}
+                  />
+                ) : (
+                  educationItem.location
                 )}
               </span>
             </div>

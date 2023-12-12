@@ -11,7 +11,7 @@ const Education = () => {
     startDate: "",
     endDate: "",
     student_id: "",
-
+    location: "",
   });
 
   useEffect(() => {
@@ -156,6 +156,18 @@ const Education = () => {
             id="endDate"
             name="endDate"
             value={formData.endDate}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group col-md-6">
+          <label htmlFor="location">Location</label>
+          <input
+            type="text"
+            className="form-control"
+            id="location"
+            name="location"
+            value={formData.location}
             onChange={handleChange}
           />
         </div>

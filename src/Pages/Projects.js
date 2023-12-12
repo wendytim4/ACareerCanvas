@@ -13,6 +13,9 @@ const Projects = () =>
     end_date: "",
     student_id: "",
     project_description:"",
+    project_descriptionone:"",
+    project_descriptiontwo:"",
+
   });
   
   useEffect(() => {
@@ -39,7 +42,7 @@ const Projects = () =>
           console.error("Invalid or missing studentId in sessionStorage");
         }
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error");
       }
     };
 
@@ -53,7 +56,6 @@ const Projects = () =>
       [name]: value,
     });
   };
-
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -86,8 +88,7 @@ const Projects = () =>
         console.error("Error sending data. Status:", response.status);
       }
     } catch (error) {
-      console.error("Error:", error);
-    
+      console.error("Error");
     }
   };
 
@@ -107,7 +108,7 @@ const Projects = () =>
         </div>
 
         <div className="form-group col-md-6">
-          <label htmlFor="project_owner">Project Owner</label>
+          <label htmlFor="project_owner">Company/Project Owner</label>
           <input
             type="text"
             className="form-control"
@@ -121,9 +122,9 @@ const Projects = () =>
 
       <div className="form-project-row">
         <div className="form-group col-md-6">
-          <label htmlFor="start_date">Start Date</label>
+          <label htmlFor="start_date">Start Date(Month and Year)</label>
           <input
-            type="date"
+            type="text"
             className="form-control"
             id="start_date"
             name="start_date"
@@ -133,9 +134,9 @@ const Projects = () =>
         </div>
 
         <div className="form-group col-md-6">
-          <label htmlFor="end_date">End Date</label>
+          <label htmlFor="end_date">End Date (Month andYear)</label>
           <input
-            type="date"
+            type="text"
             className="form-control"
             id="end_date"
             name="end_date"
@@ -148,14 +149,37 @@ const Projects = () =>
       <div className="form-project-row">
         <div className="form-project-row">
           <div className="form-group col-md-6">
-            <label htmlFor="project_description">Project Description</label>
+            <label htmlFor="project_description">Project Description One</label>
             <input
               type="text"
               className="form-control"
               id="project_description"
               name="project_description"
-              style={{ width: "800px", height: "100px" }}
               value={formData.project_description}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group col-md-6">
+            <label htmlFor="project_descriptionone">Project Description Two</label>
+            <input
+              type="text"
+              className="form-control"
+              id="project_descriptionone"
+              name="project_descriptionone"
+              value={formData.project_descriptionone}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group col-md-6">
+            <label htmlFor="project_descriptiontwo">Project Description Three</label>
+            <input
+              type="text"
+              className="form-control"
+              id="project_descriptiontwo"
+              name="project_descriptiontwo"
+              value={formData.project_descriptiontwo}
               onChange={handleChange}
             />
           </div>

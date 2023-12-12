@@ -8,6 +8,7 @@ const MainCurriculum = () => {
     const navigate = useNavigate()
     const [curriculumData, setCurriculumData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedItems, setSelectedItems] = useState([]);
 
   // Fetch education data from the backend when the component mounts
   useEffect(() => {
@@ -40,21 +41,128 @@ const MainCurriculum = () => {
     return <p>Loading...</p>; // You can replace this with a loading spinner or any other loading indicator
   }
 
-  return (
-      <div className='boarder-container'>
-        
-            <div className="form-student-row">
-                  <div className="form-group col-md-6">
-                    <label for="inputEmail4">EXTRA CURRICULUM ACTIVITIES</label>
-                  </div>
-                  <hr className="long-line"  style={{ width: '100%', border: '1px solid black' }}/>
-            </div>
 
+  const handleCheckboxChange = (curriculum_id) => {
+    setSelectedItems((prevSelectedItems) => {
+      const isAlreadySelected = prevSelectedItems.includes(curriculum_id);
+
+      if (isAlreadySelected) {
+        return prevSelectedItems.filter((id) => id !== curriculum_id);
+      } else {
+        return [...prevSelectedItems, curriculum_id];
+      }
+    });
+  };
+
+  const handleCheckAll = () => {
+    const allExperienceIds = curriculumData.map((item) => item.curriculum_id);
+    setSelectedItems(allExperienceIds);
+  };
+
+  const handleUncheckAll = () => {
+    setSelectedItems([]);
+  };
+
+  const handleCheckSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Submitting form data:", curriculumData);
+    console.log(curriculumData[0].student_id);
+    console.log(curriculumData[0].end_date);
+    if (!curriculumData[0].student_id) {
+      console.error("Missing student_id in curriculumData");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost/api/curriculum_cv.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(curriculumData[0]),
+        }
+      );
+      const data = await response.json();
+      console.log("Response:", response);
+
+      if (response.ok) {
+        console.log(data.message);
+        console.log("Data sent successfully", data);
+      } else {
+        console.error(data.error);
+        console.error("Error sending data. Status:", response.status);
+      }
+    } catch (error) {
+      console.log("Error");
+      //console.error("Error:", error);
+    }
+  };
+
+//   if (
+//     !Array.isArray(experienceData) ||
+//     experienceData.length === 0 ||
+//   experienceData.message
+//   ) {
+//     return (
+//       <div className="boarder-container">
+//         <div className="form-student-row">
+//           <div className="form-group col-md-6">
+//             <label htmlFor="inputEmail4">EXPERIENCE</label>
+//             <hr
+//               className="long-line"
+//               style={{ width: "100%", border: "1px solid black" }}
+//             />
+//           </div>
+//         </div>
+//         <div className="right-side">
+//           <div className="labels-container">
+//             <label htmlFor="label1">
+//               {experienceData.message || "No education data found"}
+//             </label>
+//           </div>
+//         </div>
+
+//         <div className="btn-row-education">
+//           <button
+//             type="submit"
+//             className="main-primary-btn"
+//             onClick={() => navigate("/experience")}
+//           >
+//             Add
+//           </button>
+//         </div>
+//       </div>
+//     );
+//   }
+
+
+
+
+
+
+
+
+
+
+  return (
+
+        <div className='boarder-container'>
+        <div className="form-student-row">
+          <div className="form-group col-md-6">
+            <label htmlFor="inputEmail4">EXTRA CURRICULUM ACTIVITIES</label>
+          </div>
+          <hr className="long-line" style={{ width: '100%', border: '1px solid black' }} />
+        </div>
 
         {curriculumData.map((curriculumItem) => (
-        <div key={curriculumItem.curriculum_id} className="row-grid">
-            <div className='left-side-curr'>
-                <CheckBoxIcon/>
+          <div key={curriculumItem.curriculum_id} className='row-grid'>
+            <div className='left-side-achievement'>
+              <CheckBoxIcon
+                color={selectedItems.includes(curriculumItem.curriculum_id) ? "primary" : "disabled"}
+                onClick={() => handleCheckboxChange(curriculumItem.curriculum_id)}
+              />
             </div>
 
             <div className='right-side'>
@@ -84,26 +192,38 @@ const MainCurriculum = () => {
 
                 </div>
 
+                <div className="labels-container">
+                    <label htmlFor="label1">Description :</label>
+                    <span id="label1">{curriculumItem.descriptionone}</span>
+
+                </div>
+
+                <div className="labels-container">
+                    <label htmlFor="label1">Description :</label>
+                    <span id="label1">{curriculumItem.descriptiontwo}</span>
+
+                </div>
+
                 <div> 
                     <button className='main-primary-btn'>Approved</button>
                 </div>
             </div>
         </div>
 ))}
-         <div className="btn-row-education">
-        <button type="submit" className="main-primary-btn">
-          cancel
+          <div className="btn-row-exp">
+        <button type="button" className="main-primary-btn" onClick={handleCheckAll}>
+          Check All
         </button>
-        <button type="submit" className="main-primary-btn">
-          edit
+        <button type="button" className="main-primary-btn" onClick={handleUncheckAll}>
+          Uncheck All
         </button>
-        <button type="submit" className="main-primary-btn">
-          delete
+        <button type="button" className="main-primary-btn" onClick={handleCheckSubmit}>
+          Submit Checked
         </button>
         <button
           type="submit"
           className="main-primary-btn"
-          onClick={() => navigate("/Activity")}
+          onClick={() => navigate("/activity")}
         >
           Add
         </button>

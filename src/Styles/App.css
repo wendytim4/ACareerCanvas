@@ -1,12 +1,12 @@
 .App{
     width: 100vw;
-    height: 100vh;
+    height: 1000vh;
 }
 body{
     margin: 0;
     padding: 0;
     padding-top: 54px;
-    position: fixed;
+    /* position: fixed; */
 }
 .boarder-container{
     display: flex;

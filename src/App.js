@@ -22,7 +22,8 @@ import MainSkill from "./Pages/MainSkill";
 import MainAchievement from "./Pages/MainAchievement";
 import Review from "./Pages/Review";
 import Admin from "./Pages/Admin";
-import Display from "./Pages/Display"
+import Display from "./Pages/Display";
+import AshesiResume from "./Pages/AshesiResume";
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
             <Route path="/mainachievement" element={<MainAchievement />} />
             <Route path="/display" element={<Display/>} />
             <Route path="/review" element={<Review />} />
+            <Route path="/AshesiResume" element={<AshesiResume />} />
 
             {/* Admin page */}
             <Route path="/admin" element={<Admin />} />

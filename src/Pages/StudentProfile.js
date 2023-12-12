@@ -8,13 +8,15 @@ import { Link, useNavigate } from "react-router-dom";
 const StudentProfile = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    githubUsername: "",
-    linkedInProfile: "",
+    github: "",
+    linkedin: "",
     phoneNumber: "",
     city: "",
     country: "",
     address: "",
     student_id: "",
+    full_name: "",
+    email: "",
   });
 
   useEffect(() => {
@@ -42,7 +44,7 @@ const StudentProfile = () => {
           console.error("Invalid or missing studentId in sessionStorage");
         }
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error");
       }
     };
 
@@ -87,7 +89,7 @@ const StudentProfile = () => {
         console.error(data.error);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error");
     }
   };
 
@@ -133,33 +135,45 @@ const StudentProfile = () => {
             </div>
 
             <div className="form-student-row">
-              <div className="form-group col-md-6">
-                <label htmlFor="githubUsername">GitHub</label>
+            <div className="form-group col-md-6">
+                <label htmlFor="full_name">Full Name</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="githubUsername"
-                  name="githubUsername"
-                  value={formData.githubUsername}
+                  id="full_name"
+                  name="full_name"
+                  value={formData.full_name}
                   onChange={handleChange}
                 />
               </div>
 
               <div className="form-group col-md-6">
-                <label htmlFor="linkedInProfile">LinkedIn</label>
+                <label htmlFor="github">GitHub</label>
                 <input
                   type="text"
                   className="form-control"
-                  id="linkedInProfile"
-                  name="linkedInProfile"
-                  value={formData.linkedInProfile}
+                  id="github"
+                  name="github"
+                  value={formData.github}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group col-md-6">
+                <label htmlFor="linkedin">LinkedIn</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="linkedin"
+                  name="linkedin"
+                  value={formData.linkedin}
                   onChange={handleChange}
                 />
               </div>
             </div>
             <div className="form-student-row">
               <div className="form-group col-md-6">
-                {/* <label htmlFor="email">Email</label>
+                <label htmlFor="email">Email</label>
                 <input
                   type="text"
                   className="form-control"
@@ -167,11 +181,11 @@ const StudentProfile = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                /> */}
+                /> 
               </div>
 
               <div className="form-group col-md-6">
-                <label htmlFor="phoneNumber">Contact</label>
+                <label htmlFor="phoneNumber">Phone Number</label>
                 <input
                   type="text"
                   className="form-control"

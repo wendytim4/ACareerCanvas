@@ -24,6 +24,10 @@ const HeaderNavbar = () => {
           <li className="nav-item">
             <Link to="/admin" className="nav-link">Admin</Link>
           </li>
+
+          <li className="nav-item">
+            <Link to="/AshesiResume" className="nav-link">View Resume</Link>
+          </li>
         </ul>
 
         <form className="form-inline my-2 my-lg-0">

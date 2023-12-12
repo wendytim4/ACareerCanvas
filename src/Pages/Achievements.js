@@ -10,19 +10,18 @@ const Achievements=()=>{
     organization_name: "",
     year_attained: "",
     student_id: "",
-  });
+});
 
+useEffect(() => {
+  const fetchStudentData = async () => {
+    try {
+      const studentId = sessionStorage.getItem("studentId");
 
-  useEffect(() => {
-    const fetchStudentData = async () => {
-      try {
-        const studentId = sessionStorage.getItem("studentId");
-
-        if (studentId && !isNaN(studentId)) {
+      if (studentId && !isNaN(studentId)) {
           const response = await fetch(
             `http://localhost/api/student.php?student_id=${studentId}`
           );
-
+          
           if (response.ok) {
             const data = await response.json();
             setFormData((prevData) => ({
@@ -37,7 +36,7 @@ const Achievements=()=>{
           console.error("Invalid or missing studentId in sessionStorage");
         }
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error");
       }
     };
 
@@ -47,12 +46,12 @@ const Achievements=()=>{
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
-      formData,
+      ...formData,
       [name]: value,
     });
   };
 
-  const handleSave = async (e) => {
+const handleSave = async (e) => {
     e.preventDefault();
     console.log("Submitting form data:", formData);
     console.log(formData);
@@ -129,7 +128,7 @@ return (
                   </div>
 
 
-                  <input type="hidden" name="student_id" value={formData.student_id} onChange={handleChange}/>
+                  <input type="hidden" name="student_id" value={formData.student_id}/>
                   <div className="form-project-row">
                       <div className="form-group col-md-6">
                         <div className="moveUp">
