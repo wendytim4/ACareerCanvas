@@ -9,6 +9,7 @@ const MainAchievement = () => {
     const [achievementData, setachievementData] = useState();
     const [selectedItems, setSelectedItems] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [errorMessages, setErrorMessages] = useState([]);
      
     // Fetch education data from the backend when the component mounts
     useEffect(() => {
@@ -93,6 +94,38 @@ const MainAchievement = () => {
         if (response.ok) {
           console.log(data.message);
           console.log("Data sent successfully", data);
+        } else {
+          console.error(data.error);
+          console.error("Error sending data. Status:", response.status);
+        }
+        
+      } catch (error) {
+        console.log("Error");
+        //console.error("Error:", error);
+      }
+    };
+    
+    const handledelete = async (e) => {
+      e.preventDefault();
+      console.log("Submitting form data:", selectedSkills);
+  
+      try {
+        const response = await fetch(
+          "http://localhost/api/achievements_cvdel.php",
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(selectedSkills),
+          }
+        );
+        const data = await response.json();
+        console.log("Response:", response);
+  
+        if (response.ok) {
+          console.log(data.message);
+          console.log("Deleted Data sent successfully", data);
         } else {
           console.error(data.error);
           console.error("Error sending data. Status:", response.status);
@@ -190,6 +223,9 @@ const MainAchievement = () => {
         <div className="btn-row-exp">
         <button type="button" className="main-primary-btn" onClick={handleCheckAll}>
           Check All
+        </button>
+        <button type="button" className="main-primary-btn" onClick={handledelete}>
+          Remove from CV
         </button>
         <button type="button" className="main-primary-btn" onClick={handleUncheckAll}>
           Uncheck All

@@ -102,6 +102,38 @@ const MainExperience = () => {
     }
   };
 
+
+  const handledelete = async (e) => {
+    e.preventDefault();
+    console.log("Submitting form data:", selectedSkills);
+
+    try {
+      const response = await fetch(
+        "http://localhost/api/experience_cvdel.php",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(selectedSkills),
+        }
+      );
+      const data = await response.json();
+      console.log("Response:", response);
+
+      if (response.ok) {
+        console.log(data.message);
+        console.log("Deleted Data sent successfully", data);
+      } else {
+        console.error(data.error);
+        console.error("Error sending data. Status:", response.status);
+      }
+    } catch (error) {
+      console.log("Error");
+      //console.error("Error:", error);
+    }
+  };
+
 //   if (
 //     !Array.isArray(experienceData) ||
 //     experienceData.length === 0 ||
@@ -222,6 +254,9 @@ const MainExperience = () => {
         </button>
         <button type="button" className="main-primary-btn" onClick={handleCheckSubmit}>
           Submit Checked
+        </button>
+        <button type="button" className="main-primary-btn" onClick={ handledelete}>
+          Remove from CV
         </button>
       </div>
     </div>

@@ -58,7 +58,7 @@ const MainProject = () => {
   };
 
   const selectedSkills = projectData.filter((projectItem) =>
-  selectedItems.includes(projectItem.project_id)
+    selectedItems.includes(projectItem.project_id)
     );
   const handleCheckAll = () => {
     const allExperienceIds = projectData.map((item) => item.project_id);
@@ -90,6 +90,37 @@ const MainProject = () => {
       if (response.ok) {
         console.log(data.message);
         console.log("Data sent successfully", data);
+      } else {
+        console.error(data.error);
+        console.error("Error sending data. Status:", response.status);
+      }
+    } catch (error) {
+      console.log("Error");
+      //console.error("Error:", error);
+    }
+  };
+
+  const handledelete = async (e) => {
+    e.preventDefault();
+    console.log("Submitting form data:", selectedSkills);
+
+    try {
+      const response = await fetch(
+        "http://localhost/api/project_cvdel.php",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(selectedSkills),
+        }
+      );
+      const data = await response.json();
+      console.log("Response:", response);
+
+      if (response.ok) {
+        console.log(data.message);
+        console.log("Deleted Data sent successfully", data);
       } else {
         console.error(data.error);
         console.error("Error sending data. Status:", response.status);
@@ -207,6 +238,10 @@ const MainProject = () => {
         </button>
         <button type="button" className="main-primary-btn" onClick={handleCheckSubmit}>
           Submit Checked
+        </button>
+        
+        <button type="button" className="main-primary-btn" onClick={handledelete}>
+          Remove from CV
         </button>
       </div>
     </div>

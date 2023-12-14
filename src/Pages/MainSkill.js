@@ -10,7 +10,7 @@ const MainSkill = () => {
     const [skillData, setskillData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedItems, setSelectedItems] = useState([]);
-
+    
     // Fetch education data from the backend when the component mounts
     useEffect(() => {
         const fetchData = async () => {
@@ -106,6 +106,37 @@ const MainSkill = () => {
         }
       };
 
+      const handledelete = async (e) => {
+        e.preventDefault();
+        console.log("Submitting form data:", selectedSkills);
+    
+        try {
+          const response = await fetch(
+            "http://localhost/api/skill_cvdel.php",
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(selectedSkills),
+            }
+          );
+          const data = await response.json();
+          console.log("Response:", response);
+    
+          if (response.ok) {
+            console.log(data.message);
+            console.log("Deleted Data sent successfully", data);
+          } else {
+            console.error(data.error);
+            console.error("Error sending data. Status:", response.status);
+          }
+        } catch (error) {
+          console.log("Error");
+          //console.error("Error:", error);
+        }
+      };
+
 
 return (
    <div className='boarder-container'>
@@ -151,6 +182,9 @@ return (
         </button>
         <button type="button" className="main-primary-btn" onClick={handleCheckSubmit}>
           Submit Checked
+        </button>
+        <button type="button" className="main-primary-btn" onClick={handledelete}>
+          Remove from CV
         </button>
       </div>
     </div>
